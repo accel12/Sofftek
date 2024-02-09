@@ -1,0 +1,241 @@
+.documentoIdentidad {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media only screen and (min-width: 720px) {
+  .contadorTop {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    background-color: #edeffc;
+    padding: 16px 0px 16px 0px;
+  }
+
+  .tituloCotiza {
+    font-size: 40px;
+    text-align: center;
+  }
+
+  .contenedorTituloPlanes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 40px;
+  }
+  .listaPlanesMobil {
+    display: none;
+  }
+  .contadorTopMobil {
+    display: none;
+  }
+  .separadorTop {
+    display: none;
+  }
+  .contenedorMedio {
+    display: flex;
+    justify-content: center;
+    // margin: 0px 25%;
+  }
+  .contenidoMedio2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .contenedorOpciones {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 600px;
+    gap: 30px;
+  }
+  .card1 {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 1px 32px 0px #aeacf359;
+    padding: 16px 24px 40px 24px;
+    border-radius: 24px;
+    margin-bottom: 20px;
+  }
+  .card2 {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 1px 32px 0px #aeacf359;
+    padding: 40px 24px 40px 24px;
+    border-radius: 24px;
+  }
+  .listaPlanes {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .contenedorFinal {
+    min-width: 700px;
+    margin: 0px 25%;
+  }
+
+  .contenidoMedio {
+    padding: 15px;
+    width: 40%;
+    max-width: 600px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  ul.puntos {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  ul.puntos li {
+    position: relative;
+    padding-left: 1.5em;
+    margin-bottom: 0.5em;
+  }
+
+  ul.puntos li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 6px;
+    width: 1em;
+    height: 1em;
+    background-repeat: no-repeat;
+    background-image: url("../assets/point.svg");
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .contadorTop {
+    display: none;
+  }
+  .contadorTopMobil {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px 24px;
+  }
+  .tituloCotiza {
+    font-size: 24px;
+  }
+  .contenidoMedio {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .contenedorCard2 {
+    max-width: 300px;
+    margin: 30px;
+  }
+  .card1 {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 1px 32px 0px #aeacf359;
+    padding: 16px 24px 40px 24px;
+    border-radius: 24px;
+    margin-bottom: 20px;
+  }
+  .contenedorTituloPlanes {
+    display: flex;
+    flex-direction: column;
+
+    margin-bottom: 40px;
+  }
+  .card2 {
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0px 1px 32px 0px #aeacf359;
+    padding: 40px 24px 40px 24px;
+    border-radius: 24px;
+  }
+  .listaPlanes {
+    display: none;
+  }
+  .listaPlanesMobil {
+    display: block;
+  }
+  .titulo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+  .titulo svg {
+    margin-right: 8px;
+  }
+  .botonFlecha {
+    border-radius: 24px;
+    border: 3px solid hsl(233, 39%, 76%);
+    width: auto;
+  }
+  .pasos {
+    min-width: 120px;
+    text-align: center;
+  }
+  .barraCarga {
+    width: 100%;
+    height: 10px; /* Altura de la barra de carga */
+    background-color: #d7dbf5; /* Color de fondo de la barra */
+    position: relative;
+    border-radius: 20px;
+  }
+
+  .barraCarga::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 10%;
+    height: 100%;
+    border-radius: 20px;
+    background-color: #4f4fff; /* Color de la parte cargada */
+    animation: llenar 3s ease-in-out infinite; /* Animación de llenado */
+  }
+
+  .listaCards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-container {
+    display: flex;
+    overflow-x: hidden;
+    width: 100%;
+  }
+
+  .card-wrapper {
+    flex: 0 0 auto;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .card {
+    width: 300px;
+    height: 200px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+  .contenedorOpciones {
+    display: flex;
+    flex-direction: column;
+    align-items: normal;
+    justify-content: left;
+    gap: 5px;
+  }
+  .slider-container {
+    margin: 10px;
+  }
+  .logoDescripcion {
+    min-width: 45px;
+  }
+}

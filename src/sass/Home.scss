@@ -1,0 +1,119 @@
+.titulo2 {
+  background: linear-gradient(86.01deg, #00f4e2 0%, #00ff7f 100%);
+  padding: 4px 8px 4px 8px;
+  width: fit-content;
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+@media only screen and (min-width: 720px) {
+  .titulo2 label {
+    font-weight: bold !important;
+  }
+  .ladoIzquierdo {
+    height: 90%;
+    padding: 32px 0px 48px 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #contenidoDerecho {
+    max-width: 400px;
+  }
+  #contenedorHome {
+    flex-grow: 1;
+    position: relative;
+  }
+  .ladoDerecho {
+    padding: 30px;
+  }
+  .contenedor-contenido {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  #imagen1 {
+    display: none;
+  }
+  .separador {
+    display: none;
+  }
+  .descripcionTexto1 {
+    line-height: 20px;
+    font-size: 14px;
+  }
+  .colorDifuminadoBottom {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    // width: 400px;
+    // height: 200px;
+    z-index: 0;
+  }
+  .colorDifuminadoTop {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    // width: 300px;
+    // height: 200px;
+    z-index: 0;
+  }
+  .separadorPlanes {
+    border: none;
+    margin: 20px 0px;
+    height: 1px;
+    color: #ccd1ee;
+    background-color: #ccd1ee;
+  }
+}
+
+@media only screen and (max-width: 720px) {
+  .ladoIzquierdo {
+    display: none;
+  }
+  .ladoDerecho {
+    width: 100%;
+    padding: 0px !important;
+  }
+  .colorDifuminadoBottom {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 120px;
+    height: 200px;
+    z-index: 0;
+  }
+  #contenedorHome {
+    margin: 0px 20px;
+    // position: relative;
+  }
+
+  .colorDifuminadoTop {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    width: 300px;
+    height: 200px;
+    z-index: 0;
+  }
+  .contenedorTitulo {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .contenedorDescripcion {
+  }
+  .descripcion1 {
+  }
+  .descripcionTexto1 {
+    line-height: 20px;
+    font-size: 14px;
+  }
+  .separador {
+    border: none;
+    margin: 20px 0px;
+    height: 1px;
+    color: #ccd1ee;
+    background-color: #ccd1ee;
+  }
+}

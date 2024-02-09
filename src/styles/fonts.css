@@ -1,0 +1,21 @@
+@font-face {
+  font-family: "BR Sonoma SemiBold";
+  src: url("../fonts/BRSonoma-SemiBold-BF654c45268c340.otf") format("OpenType");
+}
+@font-face {
+  font-family: "BR Sonoma";
+  src: url("../fonts/BRSonoma-Regular-BF654c45266c042.otf") format("OpenType");
+}
+@font-face {
+  font-family: "BR Sonoma Bold";
+  src: url("../fonts/BRSonoma-Bold-BF654c4526823f5.otf") format("OpenType");
+}
+@font-face {
+  font-family: "BR Sonoma Black";
+  src: url("../fonts/BRSonoma-Black-BF654c4525506bf.otf") format("OpenType");
+}
+
+@font-face {
+  font-family: "BR Sonoma light";
+  src: url("../fonts/BRSonoma-Light-BF654c452608e0f.otf") format("OpenType");
+}
