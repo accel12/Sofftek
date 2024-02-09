@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import "../sass/_Formulario.scss";
 const Formulario = () => {
+  const navigate = useNavigate();
   return (
     <div className="contenedorFormulario">
       <div className="documentoIdentidad">
@@ -114,7 +116,14 @@ const Formulario = () => {
           </label>
         </div>
         <div className="mb-9">
-          <button id="btnAceptar">Cotiza aquí</button>
+          <button
+            id="btnAceptar"
+            onClick={() => {
+              navigate("/Sofftek/Planes");
+            }}
+          >
+            Cotiza aquí
+          </button>
         </div>
       </div>
     </div>

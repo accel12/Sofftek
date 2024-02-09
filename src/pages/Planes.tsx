@@ -1,14 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "../sass/Planes.scss";
 import ListaCards from "../components/ListaCards";
+import { useNavigate } from "react-router-dom";
 const Planes = () => {
   // const [cliente, setCliente] = useState({
   //   name: "",
   //   lastName: "",
   //   birthDay: "",
   // });
+  const navigate = useNavigate();
+  const [isChecked1, setIsChecked1] = useState(false);
+  const [isChecked2, setIsChecked2] = useState(false);
   const cargarUsuario = () => {
     fetch("https://rimac-front-end-challenge.netlify.app/api/user.json", {
       method: "GET",
@@ -16,6 +20,24 @@ const Planes = () => {
         "Access-Control-Allow-Origin": "*",
       },
     }).then((data) => console.log(data));
+  };
+  const mostrarPlanes = (e) => {
+    console.log(e.target.id);
+    console.log(e.target.checked);
+    if (e.target.id == "check1" && e.target.checked == true) {
+      setIsChecked2(false);
+      setIsChecked1(true);
+    }
+    if (e.target.id == "check1" && e.target.checked == false) {
+      setIsChecked1(false);
+    }
+    if (e.target.id == "check2" && e.target.checked == true) {
+      setIsChecked1(false);
+      setIsChecked2(true);
+    }
+    if (e.target.id == "check2" && e.target.checked == false) {
+      setIsChecked2(false);
+    }
   };
   useEffect(() => {
     cargarUsuario();
@@ -108,7 +130,12 @@ const Planes = () => {
       <hr className="separador separadorTop" />
       <div className="contenedorMedio">
         <div className="contenidoMedio">
-          <div className="flex items-center text-[#4F4FFF] h-11 text-lg">
+          <div
+            className="flex items-center text-[#4F4FFF] h-11 text-lg"
+            onClick={() => {
+              navigate("/Sofftek");
+            }}
+          >
             <svg
               width="20"
               height="20"
@@ -143,7 +170,7 @@ const Planes = () => {
               </div>
 
               <div className="contenedorOpciones">
-                <div className="card1" style={{ minHeight: "230px" }}>
+                <div className="card1">
                   <div className="flex justify-end">
                     <label
                       className="relative flex rounded-full cursor-pointer"
@@ -152,7 +179,11 @@ const Planes = () => {
                       <input
                         type="checkbox"
                         className=" peer  h-7 w-7 cursor-pointer appearance-none rounded-full border  transition-all   checked:bg-[#389E0D] "
-                        id="check"
+                        id="check1"
+                        checked={isChecked1}
+                        onClick={(e) => {
+                          mostrarPlanes(e);
+                        }}
                       />
                       <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                         <svg
@@ -216,7 +247,7 @@ const Planes = () => {
 
                     <label className="fuenteBold">Para mí</label>
                   </div>
-                  <label style={{ fontSize: "14px" }}>
+                  <label style={{ fontSize: "14px", minHeight: "100px" }}>
                     Cotiza tu seguro de salud y agrega familiares si así lo
                     deseas.
                   </label>
@@ -230,7 +261,11 @@ const Planes = () => {
                       <input
                         type="checkbox"
                         className=" peer  h-7 w-7 cursor-pointer appearance-none rounded-full border  transition-all   checked:bg-[#389E0D] "
-                        id="check"
+                        id="check2"
+                        checked={isChecked2}
+                        onClick={(e) => {
+                          mostrarPlanes(e);
+                        }}
                       />
                       <span className="absolute text-white transition-opacity opacity-0 pointer-events-none top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 peer-checked:opacity-100">
                         <svg
@@ -294,7 +329,7 @@ const Planes = () => {
 
                     <label className="fuenteBold">Para alguien más</label>
                   </div>
-                  <label style={{ fontSize: "14px" }}>
+                  <label style={{ fontSize: "14px", minHeight: "100px" }}>
                     Realiza una cotización para uno de tus familiares o
                     cualquier persona.
                   </label>
@@ -306,272 +341,576 @@ const Planes = () => {
       </div>
       <div className="contenedorFinal" style={{ marginBottom: "50px" }}>
         <div className="listaPlanesMobil">
-          <ListaCards />
+          <ListaCards isChecked1={isChecked1} isChecked2={isChecked2} />
         </div>
         <div className="listaPlanes">
-          <div className="contenedorCard2">
-            <div className="card2">
-              <div className="flex flex-col">
-                <div className="flex">
-                  <label
-                    className="flex-1 fuenteBold"
-                    style={{ fontSize: "24px" }}
-                  >
-                    Plan en Casa
+          <div
+            id="listaPlanesParaMi"
+            className={isChecked1 ? "grid grid-cols-3 gap-5" : "hidden"}
+            // className="listaPlanesCustom"
+          >
+            <div className="contenedorCard2">
+              <div className="card2">
+                <div className="flex flex-col">
+                  <div className="flex">
+                    <label
+                      className="flex-1 fuenteBold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      Plan en Casa
+                    </label>
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
+                        fill="url(#paint0_linear_12_156415)"
+                      />
+                      <path
+                        d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
+                        fill="url(#paint1_linear_12_156415)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_12_156415"
+                          x1="40.6163"
+                          y1="29.9261"
+                          x2="58.0062"
+                          y2="39.8646"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.35" stop-color="#F7052D" />
+                          <stop offset="0.85" stop-color="#CA5AFA" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_12_156415"
+                          x1="1.75"
+                          y1="4.36304"
+                          x2="26.0494"
+                          y2="63.992"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.272135" stop-color="#34263B" />
+                          <stop offset="0.658079" stop-color="#13172C" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <label style={{ color: "#7981B2", fontSize: "14px" }}>
+                    COSTO DEL PLAN
                   </label>
-                  <svg
-                    width="56"
-                    height="56"
-                    viewBox="0 0 56 56"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
-                      fill="url(#paint0_linear_12_156415)"
-                    />
-                    <path
-                      d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
-                      fill="url(#paint1_linear_12_156415)"
-                    />
-                    <defs>
-                      <linearGradient
-                        id="paint0_linear_12_156415"
-                        x1="40.6163"
-                        y1="29.9261"
-                        x2="58.0062"
-                        y2="39.8646"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop offset="0.35" stop-color="#F7052D" />
-                        <stop offset="0.85" stop-color="#CA5AFA" />
-                      </linearGradient>
-                      <linearGradient
-                        id="paint1_linear_12_156415"
-                        x1="1.75"
-                        y1="4.36304"
-                        x2="26.0494"
-                        y2="63.992"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop offset="0.272135" stop-color="#34263B" />
-                        <stop offset="0.658079" stop-color="#13172C" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                  <label style={{ fontSize: "18px" }} className="fuenteBold">
+                    $39 al mes
+                  </label>
                 </div>
-                <label style={{ color: "#7981B2", fontSize: "14px" }}>
-                  COSTO DEL PLAN
-                </label>
-                <label style={{ fontSize: "18px" }} className="fuenteBold">
-                  $39 al mes
-                </label>
-              </div>
-              <hr className="separadorPlanes" />
-              <div className="flex mb-5">
-                <ul className="puntos">
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                </ul>
-              </div>
+                <hr className="separadorPlanes" />
+                <div className="flex mb-5" style={{ minHeight: "300px" }}>
+                  <ul className="puntos">
+                    <li>
+                      Médico general a domicilio por S/20 y medicinas cubiertas
+                      al 100%.
+                    </li>
+                    <li>
+                      Videoconsulta y orientación telefónica al 100% en medicina
+                      general + pediatría.
+                    </li>
+                    <li>
+                      Indemnización de S/300 en caso de hospitalización por más
+                      de un día.
+                    </li>
+                  </ul>
+                </div>
 
-              <button
-                style={{
-                  backgroundColor: "#FF1C44",
-                  color: "white",
-                  padding: "14px 32px 14px 32px",
-                  borderRadius: "32px",
-                }}
-              >
-                Seleccionar plan
-              </button>
+                <button
+                  style={{
+                    backgroundColor: "#FF1C44",
+                    color: "white",
+                    padding: "14px 32px 14px 32px",
+                    borderRadius: "32px",
+                  }}
+                  onClick={() => {
+                    navigate("/Sofftek/Resumen");
+                  }}
+                >
+                  Seleccionar plan
+                </button>
+              </div>
+            </div>
+            <div className="contenedorCard2">
+              <div className="card2">
+                <div className="flex flex-col">
+                  <div className="flex">
+                    <label
+                      className="flex-1 fuenteBold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      Plan en Casa y Clínica
+                    </label>
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M28 16.0169H20.7331V8.75H15.1419V16.0169H7.875V21.6081H15.1419V28.875H20.7331V21.6081H28V16.0169Z"
+                        fill="url(#paint0_linear_9_8392)"
+                      />
+                      <path
+                        d="M48.9825 18.025L38.5 12.0553V7.875C38.5 4.4975 35.7525 1.75 32.375 1.75H11.375C7.9975 1.75 5.25 4.4975 5.25 7.875V13.3919H8.75V7.875C8.75 6.42688 9.92688 5.25 11.375 5.25H32.375C33.8231 5.25 35 6.42688 35 7.875V50.75H28V40.25H15.75V50.75H8.75V24.2331H5.25V50.75C5.25 52.6794 6.82063 54.25 8.75 54.25H47.25C49.1838 54.25 50.75 52.6838 50.75 50.75V21.0656C50.75 19.8078 50.0741 18.6462 48.9825 18.025ZM24.5 50.75H19.25V43.75H24.5V50.75ZM47.25 50.75H38.5V36.75H43.75V33.25H38.5V29.75H43.75V26.25H38.5V16.0825L47.25 21.0656V50.75Z"
+                        fill="url(#paint1_linear_9_8392)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_9_8392"
+                          x1="8.40148"
+                          y1="10.3295"
+                          x2="24.983"
+                          y2="26.911"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.35" stop-color="#F7052D" />
+                          <stop offset="0.85" stop-color="#CA5AFA" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_9_8392"
+                          x1="5.25"
+                          y1="1.75"
+                          x2="36.0413"
+                          y2="61.7929"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.272135" stop-color="#34263B" />
+                          <stop offset="0.658079" stop-color="#13172C" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <label style={{ color: "#7981B2", fontSize: "14px" }}>
+                    COSTO DEL PLAN
+                  </label>
+                  <label style={{ fontSize: "18px" }} className="fuenteBold">
+                    $39 al mes
+                  </label>
+                </div>
+                <hr className="separadorPlanes" />
+                <div className="flex mb-5" style={{ minHeight: "300px" }}>
+                  <ul className="puntos">
+                    <li>Consultas en clínica para cualquier especialidad.</li>
+                    <li>Medicinas y exámenes derivados cubiertos al 80%</li>
+                    <li>Atención médica en más de 200 clínicas del país.</li>
+                  </ul>
+                </div>
+
+                <button
+                  style={{
+                    backgroundColor: "#FF1C44",
+                    color: "white",
+                    padding: "14px 32px 14px 32px",
+                    borderRadius: "32px",
+                  }}
+                  onClick={() => {
+                    navigate("/Sofftek/Resumen");
+                  }}
+                >
+                  Seleccionar plan
+                </button>
+              </div>
+            </div>
+            <div className="contenedorCard2">
+              <div className="card2">
+                <div className="flex flex-col">
+                  <div className="flex">
+                    <label
+                      className="flex-1 fuenteBold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      Plan en Casa + Chequeo
+                    </label>
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
+                        fill="url(#paint0_linear_12_156415)"
+                      />
+                      <path
+                        d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
+                        fill="url(#paint1_linear_12_156415)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_12_156415"
+                          x1="40.6163"
+                          y1="29.9261"
+                          x2="58.0062"
+                          y2="39.8646"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.35" stop-color="#F7052D" />
+                          <stop offset="0.85" stop-color="#CA5AFA" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_12_156415"
+                          x1="1.75"
+                          y1="4.36304"
+                          x2="26.0494"
+                          y2="63.992"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.272135" stop-color="#34263B" />
+                          <stop offset="0.658079" stop-color="#13172C" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <label style={{ color: "#7981B2", fontSize: "14px" }}>
+                    COSTO DEL PLAN
+                  </label>
+                  <label style={{ fontSize: "18px" }} className="fuenteBold">
+                    $39 al mes
+                  </label>
+                </div>
+                <hr className="separadorPlanes" />
+                <div className="flex mb-5" style={{ minHeight: "300px" }}>
+                  <ul className="puntos">
+                    <li>
+                      Un Chequeo preventivo general de manera presencial o
+                      virtual.
+                    </li>
+                    <li>
+                      Acceso a Vacunas en el Programa del MINSA en centros
+                      privados.
+                    </li>
+                    <li>Incluye todos los beneficios del Plan en Casa.</li>
+                  </ul>
+                </div>
+
+                <button
+                  style={{
+                    backgroundColor: "#FF1C44",
+                    color: "white",
+                    padding: "14px 32px 14px 32px",
+                    borderRadius: "32px",
+                  }}
+                  onClick={() => {
+                    navigate("/Sofftek/Resumen");
+                  }}
+                >
+                  Seleccionar plan
+                </button>
+              </div>
             </div>
           </div>
-
-          <div className="contenedorCard2">
-            <div className="card2">
-              <div className="flex flex-col">
-                <div className="flex">
-                  <label
-                    className="flex-1 fuenteBold"
-                    style={{ fontSize: "24px" }}
-                  >
-                    Plan en Casa
+          <div
+            id="listaPlanesParaOtro"
+            className={isChecked2 ? "grid grid-cols-3 gap-5" : "hidden"}
+          >
+            <div className="contenedorCard2">
+              <div className="card2">
+                <div className="flex flex-col">
+                  <div className="flex">
+                    <label
+                      className="flex-1 fuenteBold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      Plan en Casa
+                    </label>
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
+                        fill="url(#paint0_linear_12_156414)"
+                      />
+                      <path
+                        d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
+                        fill="url(#paint1_linear_12_156414)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_12_156414"
+                          x1="40.6163"
+                          y1="29.9261"
+                          x2="58.0062"
+                          y2="39.8646"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.35" stop-color="#F7052D" />
+                          <stop offset="0.85" stop-color="#CA5AFA" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_12_156414"
+                          x1="1.75"
+                          y1="4.36304"
+                          x2="26.0494"
+                          y2="63.992"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.272135" stop-color="#34263B" />
+                          <stop offset="0.658079" stop-color="#13172C" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <label style={{ color: "#7981B2", fontSize: "14px" }}>
+                    COSTO DEL PLAN
                   </label>
-                  <svg
-                    width="56"
-                    height="56"
-                    viewBox="0 0 56 56"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <label
+                    style={{ fontSize: "14px", color: "#7981B2" }}
+                    className="line-through"
                   >
-                    <path
-                      d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
-                      fill="url(#paint0_linear_12_156415)"
-                    />
-                    <path
-                      d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
-                      fill="url(#paint1_linear_12_156415)"
-                    />
-                    <defs>
-                      <linearGradient
-                        id="paint0_linear_12_156415"
-                        x1="40.6163"
-                        y1="29.9261"
-                        x2="58.0062"
-                        y2="39.8646"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop offset="0.35" stop-color="#F7052D" />
-                        <stop offset="0.85" stop-color="#CA5AFA" />
-                      </linearGradient>
-                      <linearGradient
-                        id="paint1_linear_12_156415"
-                        x1="1.75"
-                        y1="4.36304"
-                        x2="26.0494"
-                        y2="63.992"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop offset="0.272135" stop-color="#34263B" />
-                        <stop offset="0.658079" stop-color="#13172C" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                    $39 antes
+                  </label>
+                  <label style={{ fontSize: "18px" }} className="fuenteBold">
+                    $37.05 al mes
+                  </label>
                 </div>
-                <label style={{ color: "#7981B2", fontSize: "14px" }}>
-                  COSTO DEL PLAN
-                </label>
-                <label style={{ fontSize: "18px" }} className="fuenteBold">
-                  $39 al mes
-                </label>
-              </div>
-              <hr className="separadorPlanes" />
-              <div className="flex mb-5">
-                <ul className="puntos">
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                </ul>
-              </div>
+                <hr className="separadorPlanes" />
+                <div className="flex mb-5" style={{ minHeight: "300px" }}>
+                  <ul className="puntos">
+                    <li>
+                      <label className="fuenteBold">
+                        Médico general a domicilio
+                      </label>{" "}
+                      por S/20 y medicinas cubiertas al 100%.
+                    </li>
+                    <li>
+                      <label className="fuenteBold">Videoconsulta</label> y
+                      orientación telefónica al 100% en medicina general +
+                      pediatría.
+                    </li>
+                    <li>
+                      <label className="fuenteBold">Indemnización</label> de
+                      S/300 en caso de hospitalización por más de un día.
+                    </li>
+                  </ul>
+                </div>
 
-              <button
-                style={{
-                  backgroundColor: "#FF1C44",
-                  color: "white",
-                  padding: "14px 32px 14px 32px",
-                  borderRadius: "32px",
-                }}
-              >
-                Seleccionar plan
-              </button>
+                <button
+                  style={{
+                    backgroundColor: "#FF1C44",
+                    color: "white",
+                    padding: "14px 32px 14px 32px",
+                    borderRadius: "32px",
+                  }}
+                  onClick={() => {
+                    navigate("/Sofftek/Resumen");
+                  }}
+                >
+                  Seleccionar plan
+                </button>
+              </div>
             </div>
-          </div>
-          <div className="contenedorCard2">
-            <div className="card2">
-              <div className="flex flex-col">
-                <div className="flex">
-                  <label
-                    className="flex-1 fuenteBold"
-                    style={{ fontSize: "24px" }}
-                  >
-                    Plan en Casa
+            <div className="contenedorCard2">
+              <div className="card2">
+                <div className="flex flex-col">
+                  <div className="flex">
+                    <label
+                      className="flex-1 fuenteBold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      Plan en Casa y Clínica
+                    </label>
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M28 16.0169H20.7331V8.75H15.1419V16.0169H7.875V21.6081H15.1419V28.875H20.7331V21.6081H28V16.0169Z"
+                        fill="url(#paint0_linear_9_8391)"
+                      />
+                      <path
+                        d="M48.9825 18.025L38.5 12.0553V7.875C38.5 4.4975 35.7525 1.75 32.375 1.75H11.375C7.9975 1.75 5.25 4.4975 5.25 7.875V13.3919H8.75V7.875C8.75 6.42688 9.92688 5.25 11.375 5.25H32.375C33.8231 5.25 35 6.42688 35 7.875V50.75H28V40.25H15.75V50.75H8.75V24.2331H5.25V50.75C5.25 52.6794 6.82063 54.25 8.75 54.25H47.25C49.1838 54.25 50.75 52.6838 50.75 50.75V21.0656C50.75 19.8078 50.0741 18.6462 48.9825 18.025ZM24.5 50.75H19.25V43.75H24.5V50.75ZM47.25 50.75H38.5V36.75H43.75V33.25H38.5V29.75H43.75V26.25H38.5V16.0825L47.25 21.0656V50.75Z"
+                        fill="url(#paint1_linear_9_8391)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_9_8391"
+                          x1="8.40148"
+                          y1="10.3295"
+                          x2="24.983"
+                          y2="26.911"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.35" stop-color="#F7052D" />
+                          <stop offset="0.85" stop-color="#CA5AFA" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_9_8391"
+                          x1="5.25"
+                          y1="1.75"
+                          x2="36.0413"
+                          y2="61.7929"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.272135" stop-color="#34263B" />
+                          <stop offset="0.658079" stop-color="#13172C" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <label style={{ color: "#7981B2", fontSize: "14px" }}>
+                    COSTO DEL PLAN
                   </label>
-                  <svg
-                    width="56"
-                    height="56"
-                    viewBox="0 0 56 56"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <label
+                    style={{ fontSize: "14px", color: "#7981B2" }}
+                    className="line-through"
                   >
-                    <path
-                      d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
-                      fill="url(#paint0_linear_12_156415)"
-                    />
-                    <path
-                      d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
-                      fill="url(#paint1_linear_12_156415)"
-                    />
-                    <defs>
-                      <linearGradient
-                        id="paint0_linear_12_156415"
-                        x1="40.6163"
-                        y1="29.9261"
-                        x2="58.0062"
-                        y2="39.8646"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop offset="0.35" stop-color="#F7052D" />
-                        <stop offset="0.85" stop-color="#CA5AFA" />
-                      </linearGradient>
-                      <linearGradient
-                        id="paint1_linear_12_156415"
-                        x1="1.75"
-                        y1="4.36304"
-                        x2="26.0494"
-                        y2="63.992"
-                        gradientUnits="userSpaceOnUse"
-                      >
-                        <stop offset="0.272135" stop-color="#34263B" />
-                        <stop offset="0.658079" stop-color="#13172C" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
+                    $99 antes
+                  </label>
+                  <label style={{ fontSize: "18px" }} className="fuenteBold">
+                    $94.05 al mes
+                  </label>
                 </div>
-                <label style={{ color: "#7981B2", fontSize: "14px" }}>
-                  COSTO DEL PLAN
-                </label>
-                <label style={{ fontSize: "18px" }} className="fuenteBold">
-                  $39 al mes
-                </label>
-              </div>
-              <hr className="separadorPlanes" />
-              <div className="flex mb-5">
-                <ul className="puntos">
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                  <li>
-                    Médico general a domicilio por S/20 y medicinas cubiertas al
-                    100%.
-                  </li>
-                </ul>
-              </div>
+                <hr className="separadorPlanes" />
+                <div className="flex mb-5" style={{ minHeight: "300px" }}>
+                  <ul className="puntos">
+                    <li>
+                      <label className="fuenteBold">Consultas en clínica</label>{" "}
+                      para cualquier especialidad.
+                    </li>
+                    <li>
+                      <label className="fuenteBold">Medicinas y exámenes</label>{" "}
+                      derivados cubiertos al 80%
+                    </li>
+                    <li>
+                      Atención médica en
+                      <label className="fuenteBold">
+                        más de 200 clínicas del país.
+                      </label>
+                    </li>
+                  </ul>
+                </div>
 
-              <button
-                style={{
-                  backgroundColor: "#FF1C44",
-                  color: "white",
-                  padding: "14px 32px 14px 32px",
-                  borderRadius: "32px",
-                }}
-              >
-                Seleccionar plan
-              </button>
+                <button
+                  style={{
+                    backgroundColor: "#FF1C44",
+                    color: "white",
+                    padding: "14px 32px 14px 32px",
+                    borderRadius: "32px",
+                  }}
+                  onClick={() => {
+                    navigate("/Sofftek/Resumen");
+                  }}
+                >
+                  Seleccionar plan
+                </button>
+              </div>
+            </div>
+            <div className="contenedorCard2">
+              <div className="card2">
+                <div className="flex flex-col">
+                  <div className="flex">
+                    <label
+                      className="flex-1 fuenteBold"
+                      style={{ fontSize: "24px" }}
+                    >
+                      Plan en Casa + Chequeo
+                    </label>
+                    <svg
+                      width="56"
+                      height="56"
+                      viewBox="0 0 56 56"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M54.25 35C54.2493 33.6909 53.8816 32.4082 53.1886 31.2977C52.4955 30.1871 51.5049 29.2931 50.3293 28.7172C49.1537 28.1413 47.8402 27.9067 46.5379 28.0398C45.2356 28.173 43.9967 28.6687 42.962 29.4706C41.9273 30.2725 41.1382 31.3485 40.6843 32.5764C40.2304 33.8043 40.1299 35.1348 40.3942 36.4169C40.6585 37.6991 41.2771 38.8814 42.1796 39.8296C43.0821 40.7778 44.2325 41.454 45.5 41.7812V52.5H49V41.7812C50.5032 41.3931 51.8347 40.5163 52.7851 39.2887C53.7354 38.0612 54.2508 36.5525 54.25 35Z"
+                        fill="url(#paint0_linear_12_156414)"
+                      />
+                      <path
+                        d="M42.875 49H35V42C35 40.1435 34.2625 38.363 32.9498 37.0503C31.637 35.7375 29.8565 35 28 35C26.1435 35 24.363 35.7375 23.0502 37.0503C21.7375 38.363 21 40.1435 21 42V49H9.625V20.3438H9.50469L26.4819 8.34315C26.9247 8.03055 27.4535 7.86272 27.9956 7.86272C28.5377 7.86272 29.0665 8.03055 29.5094 8.34315L46.375 20.2453V25.4166C46.6637 25.3903 46.9547 25.375 47.25 25.375C48.1378 25.3749 49.0213 25.4986 49.875 25.7425V22.715L54.25 25.8125V21.5185L31.5284 5.4819C30.4939 4.7538 29.2596 4.36304 27.9945 4.36304C26.7294 4.36304 25.4952 4.7538 24.4606 5.4819L1.75 21.5382V25.8257L6.125 22.7325V49C6.125 49.9283 6.49375 50.8185 7.15012 51.4749C7.8065 52.1313 8.69674 52.5 9.625 52.5H42.875V49ZM31.5 49H24.5V42C24.5 41.0718 24.8687 40.1815 25.5251 39.5252C26.1815 38.8688 27.0717 38.5 28 38.5C28.9283 38.5 29.8185 38.8688 30.4749 39.5252C31.1313 40.1815 31.5 41.0718 31.5 42V49Z"
+                        fill="url(#paint1_linear_12_156414)"
+                      />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_12_156414"
+                          x1="40.6163"
+                          y1="29.9261"
+                          x2="58.0062"
+                          y2="39.8646"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.35" stop-color="#F7052D" />
+                          <stop offset="0.85" stop-color="#CA5AFA" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_12_156414"
+                          x1="1.75"
+                          y1="4.36304"
+                          x2="26.0494"
+                          y2="63.992"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop offset="0.272135" stop-color="#34263B" />
+                          <stop offset="0.658079" stop-color="#13172C" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </div>
+                  <label style={{ color: "#7981B2", fontSize: "14px" }}>
+                    COSTO DEL PLAN
+                  </label>
+                  <label
+                    style={{ fontSize: "14px", color: "#7981B2" }}
+                    className="line-through"
+                  >
+                    $49 antes
+                  </label>
+                  <label style={{ fontSize: "18px" }} className="fuenteBold">
+                    $46.55 al mes
+                  </label>
+                </div>
+                <hr className="separadorPlanes" />
+                <div className="flex mb-5" style={{ minHeight: "300px" }}>
+                  <ul className="puntos">
+                    <li>
+                      <label className="fuenteBold">
+                        Un Chequeo preventivo general
+                      </label>{" "}
+                      de manera presencial o virtual.
+                    </li>
+                    <li>
+                      Acceso a <label className="fuenteBold">Vacunas</label> en
+                      el Programa del MINSA en centros privados.
+                    </li>
+                    <li className="fuenteBold">
+                      Incluye todos los beneficios del plan en casa.
+                    </li>
+                  </ul>
+                </div>
+
+                <button
+                  style={{
+                    backgroundColor: "#FF1C44",
+                    color: "white",
+                    padding: "14px 32px 14px 32px",
+                    borderRadius: "32px",
+                  }}
+                  onClick={() => {
+                    navigate("/Sofftek/Resumen");
+                  }}
+                >
+                  Seleccionar plan
+                </button>
+              </div>
             </div>
           </div>
         </div>

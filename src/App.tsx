@@ -10,9 +10,9 @@ const App = (): JSX.Element => {
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Planes" element={<Planes />} />
-          <Route path="/Resumen" element={<Resumen />} />
+          <Route path="Sofftek/" element={<Home />} />
+          <Route path="Sofftek/Planes" element={<Planes />} />
+          <Route path="Sofftek/Resumen" element={<Resumen />} />
         </Routes>
       </Layout>
     </BrowserRouter>

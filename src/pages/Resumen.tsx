@@ -1,5 +1,7 @@
+import { useNavigate } from "react-router-dom";
 import "../sass/_Resumen.scss";
 const Resumen = () => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="contadorTop">
@@ -63,6 +65,34 @@ const Resumen = () => {
         <label className="fuenteSemiBold">Resumen</label>
       </div>
       <div className="contenedorContenidoResumen">
+        <div
+          className="flex items-center text-[#4F4FFF] h-11 text-lg"
+          onClick={() => {
+            navigate("/Sofftek/");
+          }}
+        >
+          <svg
+            width="20"
+            height="20"
+            viewBox="0 0 20 20"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <circle
+              cx="10"
+              cy="10"
+              r="9"
+              transform="rotate(90 10 10)"
+              stroke="#4F4FFF"
+              stroke-width="2"
+            />
+            <path
+              d="M7.55317 10L10.8094 6.74689L11.6907 7.62814L9.32192 10L11.6907 12.3719L10.8094 13.2531L7.55317 10Z"
+              fill="#4F4FFF"
+            />
+          </svg>
+          <label className="ml-1">Volver</label>
+        </div>
         <div className="tituloResumen">
           <label className="fuenteBold">Resumen del seguro</label>
         </div>
