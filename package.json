@@ -2,7 +2,7 @@
   "name": "pruebaapp",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://accel12.github.io/PruebaSofttek",
+  "homepage": "https://accel12.github.io/Softtek",
   "type": "module",
   "scripts": {
     "predeploy": "npm run build",
